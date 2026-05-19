@@ -1,11 +1,15 @@
 import { defineConfig } from "drizzle-kit";
+import dotenv from "dotenv";
+dotenv.config();
 const config = defineConfig({
-  dialect: "postgresql",
-  schema: "./src/db/Courseschema.js",
+  schema: "./src/db/schema/Courseschema.js",
   out: "./src/db/migrations",
+  // dialect: "postgresql",
+  driver: "pg",
   dbCredentials: {
-    connectionString: process.env.DATA_BASE_URL,
+    url: process.env.DATABASE_URL,
   },
+
   verbose: true,
   strict: true,
 });

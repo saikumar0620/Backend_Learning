@@ -8,7 +8,10 @@ import courseRouter from "./routes/CourseRouter.js";
 import notFoundHandler from "./middlewares/notFoundHandler.js";
 import globalErrorHandler from "./middlewares/globalErrorHandler.js";
 
-app.use("/api/v1/courses",courseRouter);
+app.use("/api/v1/courses", courseRouter);
+app.use("/api/v1/courses/:id", courseRouter);
+
+
 app.use(notFoundHandler);
 app.use(globalErrorHandler);
 
