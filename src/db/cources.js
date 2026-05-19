@@ -12,5 +12,11 @@ class Cources{
     this.cources.push(newCourse);
     return newCourse;
   }
+  getAllCources() {
+    return this.cources;
+  }
+  getCourceById(id) {
+    return this.cources.find(course => course.id === id);
+  }
 }
 export default Cources;
