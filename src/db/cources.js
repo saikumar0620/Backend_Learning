@@ -5,7 +5,7 @@ class Cources{
   }
   createCource(newCourse) {
     newCourse.id = uuidv4();
-    courseWithSameName= this.cources.find(course => course.name === newCourse.name);
+    const courseWithSameName = this.cources.find(course => course.name === newCourse.name);
     if (courseWithSameName) {
       throw new Error('Course with the same name already exists');
     }

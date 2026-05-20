@@ -1,3 +1,5 @@
+//if you provide imports as below code then you will get an error
+// import { integer, pgTable, serial, text, timestamp, varchar } from "drizzle-orm/pg-core";
 import {
   boolean,
   integer,
@@ -19,4 +21,3 @@ const courses = pgTable("courses", {
 });
 export { courses };
 
-// import { integer, pgTable, serial, text, timestamp, varchar } from "drizzle-orm/pg-core";

@@ -1,6 +1,6 @@
 import { eq, ilike, count, desc, and } from "drizzle-orm";
-import { db } from "@/db";
-import { courses } from "@/db/schema";
+import { db } from "../db/index.js";
+import { courses } from "../db/schema/index.js";
 
 export const courseRepository = {
   async create(data) {
@@ -24,16 +24,21 @@ export const courseRepository = {
       conditions.push(ilike(courses.course_name, `%${search}%`));
     }
 
-    if (isPublished !== undefined) {
-      conditions.push(eq(courses.isPublished, isPublished));
-    }
+    // if (isPublished !== undefined) {
+    //   conditions.push(eq(courses.isPublished, isPublished));
+    // }
 
     const whereClause = conditions.length > 0 ? and(...conditions) : undefined;
 
     const [data, countResult] = await Promise.all([
-      db.select().from(courses).where(whereClause).orderBy(desc(courses.createdAt)).limit(limit).offset(offset),
+      db
+        .select()
+        .from(courses)
+        .where(whereClause)
+        .orderBy(desc(courses.createdAt))
+        .limit(limit)
+        .offset(offset),
       db.select({ total: count() }).from(courses).where(whereClause),
-
     ]);
 
     return {
@@ -59,18 +64,6 @@ export const courseRepository = {
     return course ?? null;
   },
 
-  async update(id, data) {
-    const [updated] = await db
-      .update(courses)
-      .set({
-        ...data,
-        updatedAt: new Date(),
-      })
-      .where(eq(courses.id, id))
-      .returning();
-
-    return updated ?? null;
-  },
 
   async remove(id) {
     const [deleted] = await db
