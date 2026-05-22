@@ -55,14 +55,14 @@
 
 
 import Users from "../db/users.js"
-import asyncHandler from "../utils/asyncHandler.js"
+// import asyncHandler from "../utils/asyncHandler.js"
 import { generateAccessToken, generateRefreshToken } from "../utils/jwt-tokens.js"
 
 
 const userInstance= new Users()
 
 
-const registerNewUser = asyncHandler(async (req,res) => {
+const registerNewUser = async (req,res) => {
   const newUserdata = req.body
   const savedNewUser =userInstance.createNewUser(newUserdata)
   if (!req.body.username) {
@@ -73,11 +73,11 @@ const registerNewUser = asyncHandler(async (req,res) => {
     data: savedNewUser,
     message: "User registered successfully"
   })
-})
+}
 
-const logInUser = asyncHandler( async (req, res) => { 
+const logInUser = async (req, res) => { 
   const userToLogin = req.body
-  const existingUser = userInstance.findUserByEmail(existingUser.email)
+  const existingUser = userInstance.findUserByEmail(userToLogin.email)
   const accessToken= generateAccessToken(existingUser.id)
   const refreshToken= generateRefreshToken(existingUser.id)
   
@@ -92,7 +92,7 @@ res.status(200).json({
   message: "User logged in successfully"
 })
 
-})
+}
 export { registerNewUser, logInUser };
 
 

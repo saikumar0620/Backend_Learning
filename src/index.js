@@ -6,7 +6,7 @@ const PORT = process.env.PORT;
 app.use(express.json());
 import courseRouter from "./routes/CourseRouter.js";
 import notFoundHandler from "./middlewares/notFoundHandler.js";
-import globalErrorHandler from "./middlewares/globalErrorHandler.js";
+// import globalErrorHandler from "./middlewares/globalErrorHandler.js";
 import authRouter from "./routes/authRouter.js";
 
 app.use("/api/v1/auth", authRouter);
@@ -19,7 +19,7 @@ app.use("/api/v1/courses", courseRouter);
 
 
 app.use(notFoundHandler);
-app.use(globalErrorHandler);
+// app.use(globalErrorHandler);
 
 app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
 

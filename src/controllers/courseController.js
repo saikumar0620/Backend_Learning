@@ -1,7 +1,7 @@
 import { courseService } from "../courses/course.service.js";
-import asyncHandler from "../utils/asyncHandler.js";
+// import asyncHandler from "../utils/asyncHandler.js";
 
-const createNewCourse = asyncHandler(async (req, res) => {
+const createNewCourse = async (req, res) => {
   if (!req.body.name) {
     throw new Error("Course name is required");
   }
@@ -13,9 +13,9 @@ const createNewCourse = asyncHandler(async (req, res) => {
     data: course,
     message: "Course created successfully",
   });
-});
+};
 
-const getAllCourses = asyncHandler(async (req, res) => {
+const getAllCourses = async (req, res) => {
   const courses = await courseService.getAllCourses(req.query);
   res.status(200).json({
     success: true,
@@ -23,9 +23,9 @@ const getAllCourses = asyncHandler(async (req, res) => {
     message: "Courses fetched successfully",
    
   });
-});
+};
 
-const getCourseById = asyncHandler(async (req, res) => {
+const getCourseById = async (req, res) => {
   const courseId = Number(req.params.id);
   const course = await courseService.getCourseById(courseId);
   res.status(200).json({
@@ -33,6 +33,6 @@ const getCourseById = asyncHandler(async (req, res) => {
     data: course,
     message: "Course read successfully",
   });
-});
+};
 
 export { createNewCourse, getAllCourses, getCourseById };

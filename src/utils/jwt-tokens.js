@@ -29,10 +29,13 @@ import jwt from 'jsonwebtoken';
 
 
 const generateAccessToken = (userId) => {
-  const accessToken=jwt.sing({userId},process.env.ACCESS_TOKEN_SECRET,{expiresIn:process.env.ACCESS_TOKEN_EXPIREY})
+  const accessToken = jwt.sign({ userId }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: process.env.ACCESS_TOKEN_EXPIREY })
+  return accessToken;
 }
 const generateRefreshToken = (userId) => {
-  const generateRefreshToken=jwt.sing({userId},process.env.REFRESH_TOKEN_SECRET,{expiresIn:process.env.REFRESH_TOKEN_EXPIREY})
+  const refreshToken = jwt.sign({ userId }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: process.env.REFRESH_TOKEN_EXPIREY })
+  return refreshToken;
+
 }
 
 export { generateAccessToken, generateRefreshToken }
