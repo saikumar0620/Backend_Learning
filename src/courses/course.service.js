@@ -1,8 +1,6 @@
 import { courseRepository } from "./course.repository.js";
 
 
-
-
 export const courseService = {
   // CREATE
   async createCourse(dto) {
@@ -29,7 +27,7 @@ export const courseService = {
   // GET ALL
   async getAllCourses(filters = {}) {
     // BUSINESS RULE: Prevent massive queries
-    const limit = filters.limit ? Number(filters.limit) : 10;
+    const limit = filters.limit ? Number(filters.limit) : 20;
     const page = filters.page ? Number(filters.page) : 1;
     const safeLimit = Math.min(limit, 100);
 

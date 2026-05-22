@@ -7,10 +7,12 @@ app.use(express.json());
 import courseRouter from "./routes/CourseRouter.js";
 import notFoundHandler from "./middlewares/notFoundHandler.js";
 import globalErrorHandler from "./middlewares/globalErrorHandler.js";
+import authRouter from "./routes/authRouter.js";
 
+app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/courses", courseRouter);
-app.use("/api/v1/courses/:id", courseRouter);
-// app.use("/api/v1/courses/all", courseRouter);
+// app.use("/api/v1/courses/:id", courseRouter);
+// app.use("/api/v1/courses", courseRouter);
 
 
 

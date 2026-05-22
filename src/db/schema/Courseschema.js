@@ -1,14 +1,14 @@
 //if you provide imports as below code then you will get an error
-// import { integer, pgTable, serial, text, timestamp, varchar } from "drizzle-orm/pg-core";
-import {
-  boolean,
-  integer,
-  pgTable,
-  serial,
-  text,
-  timestamp,
-  varchar,
-} from "drizzle-orm/pg-core";
+import { integer, pgTable, serial, text, timestamp, varchar,boolean } from "drizzle-orm/pg-core";
+// import {
+//   boolean,
+//   integer,
+//   pgTable,
+//   serial,
+//   text,
+//   timestamp,
+//   varchar,
+// } from "drizzle-orm/pg-core";
 
 const courses = pgTable("courses", {
   id: serial("id").primaryKey(),
