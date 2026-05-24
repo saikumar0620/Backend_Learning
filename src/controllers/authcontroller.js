@@ -75,25 +75,38 @@ const registerNewUser = async (req,res) => {
   })
 }
 
-const logInUser = async (req, res) => { 
+const logInUser =  (req, res) => { 
   const userToLogin = req.body
   const existingUser = userInstance.findUserByEmail(userToLogin.email)
   const accessToken= generateAccessToken(existingUser.id)
-  const refreshToken= generateRefreshToken(existingUser.id)
+  const refreshToken = generateRefreshToken(existingUser.id)
+  //save the refreshToken key value in user object
+
+  // set the cookie: refreshToken
   
 res.status(200).json({
   success: true,
   data: {
     loggedinUser: existingUser,
-    accessToken: accessToken,
-    refreshToken:refreshToken
+    accessToken: accessToken
+    // refreshToken:refreshToken
 
   },
   message: "User logged in successfully"
 })
 
 }
-export { registerNewUser, logInUser };
+
+const refreshAccessToken = (req, res) => {
+  const refreshToken = req.body.refreshToken;
+  if (!refreshToken) {
+    return res.status(401).json({
+      success: false,
+      message: "Refresh token is required",
+    });
+  }
+
+export { registerNewUser, logInUser, refreshAccessToken };
 
 
 
