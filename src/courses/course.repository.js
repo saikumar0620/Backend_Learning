@@ -1,13 +1,14 @@
 import { eq, ilike, count, desc, and } from "drizzle-orm";
 import { db } from "../db/index.js";
 import { courses } from "../db/schema/index.js";
+import { AppError } from "../middlewares/globalErrorHandler.js";
 
 export const courseRepository = {
   async create(data) {
     const [course] = await db.insert(courses).values(data).returning();
 
     if (!course) {
-      throw new Error("Failed to create course");
+      throw new AppError("Failed to create course", 500);
     }
 
     return course;

@@ -1,4 +1,5 @@
 import Users from "../db/users.js";
+import { AppError } from "../middlewares/globalErrorHandler.js";
 import {
   generateAccessToken,
   generateRefreshToken,
@@ -9,7 +10,7 @@ const registerNewUser = (req, res) => {
   const newUserData = req.body;
   const savedNewUser = userInstance.createNewUser(newUserData);
   if (!req.body.username) {
-    throw new Error("User name is required");
+    throw new AppError("User name is required", 400);
   }
 
   res.status(200).json({

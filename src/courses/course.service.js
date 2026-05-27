@@ -1,4 +1,6 @@
 import { courseRepository } from "./course.repository.js";
+import { AppError } from "../middlewares/globalErrorHandler.js";
+
 
 
 export const courseService = {
@@ -8,12 +10,12 @@ export const courseService = {
     const existing = await courseRepository.findByName(dto.name);
 
     if (existing) {
-      throw new Error(`A course named "${dto.name}" already exists`);
+      throw new AppError(`A course named "${dto.name}" already exists`, 400);
     }
 
     // BUSINESS RULE 2: Price must be positive
     if (dto.price <= 0) {
-      throw new Error("Price must be greater than 0");
+      throw new AppError("Price must be greater than 0", 400);
     }
 
     return courseRepository.create({
@@ -43,7 +45,7 @@ export const courseService = {
     const course = await courseRepository.findById(id);
 
     if (!course) {
-      throw new Error(`Course with id ${id} not found`);
+      throw new AppError(`Course with id ${id} not found`, 404);
     }
 
     return course;
@@ -55,7 +57,7 @@ export const courseService = {
     const existing = await courseRepository.findById(id);
 
     if (!existing) {
-      throw new Error(`Course with id ${id} not found`);
+      throw new AppError(`Course with id ${id} not found`, 404);
     }
 
     // BUSINESS RULE: Prevent duplicate names
@@ -63,23 +65,23 @@ export const courseService = {
       const nameConflict = await courseRepository.findByName(dto.name);
 
       if (nameConflict) {
-        throw new Error(`A course named "${dto.name}" already exists`);
+        throw new AppError(`A course named "${dto.name}" already exists`, 400);
       }
     }
 
     // BUSINESS RULE: Price must stay positive
-    if (dto.price !== undefined && dto.price <= 0) {
-      throw new Error("Price must be greater than 0");
-    }
+    // if (dto.price !== undefined && dto.price <= 0) {
+    //   throw new AppError("Price must be greater than 0", 400);
+    // }
 
     // BUSINESS RULE: Course needs modules before publishing
-    if (dto.isPublished === true && !existing.isPublished) {
-      const courseModules = await moduleRepository.findByCourseId(id);
+    // if (dto.isPublished === true && !existing.isPublished) {
+    //   const courseModules = await moduleRepository.findByCourseId(id);
 
-      if (courseModules.length === 0) {
-        throw new Error("Cannot publish a course with no modules");
-      }
-    }
+    //   if (courseModules.length === 0) {
+    //     throw new AppError("Cannot publish a course with no modules", 400);
+    //   }
+    // }
 
     const updateData = { ...dto };
 
@@ -99,13 +101,13 @@ export const courseService = {
     const existing = await courseRepository.findById(id);
 
     if (!existing) {
-      throw new Error(`Course with id ${id} not found`);
+      throw new AppError(`Course with id ${id} not found`, 404);
     }
 
     // BUSINESS RULE: Published courses cannot be deleted
-    if (existing.isPublished) {
-      throw new Error("Cannot delete a published course. Unpublish it first.");
-    }
+    // if (existing.isPublished === false) {
+    //   throw new AppError("Cannot delete a published course. Unpublish it first.", 400);
+    // }
 
     return courseRepository.remove(id);
   },
